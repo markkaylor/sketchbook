@@ -4,6 +4,7 @@ import { Link } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { graphql, useStaticQuery } from "gatsby"
+import _ from "lodash"
 
 const IndexPage = () => {
   const indexData = useStaticQuery(graphql`
@@ -24,7 +25,9 @@ const IndexPage = () => {
       <SEO title="Home" />
       {indexData.allYoutubePlaylist.edges.map(({ node }) => (
         <h1>
-          <Link to="/page-2/">{node.playlist.playlistTitle}</Link>
+          <Link to={_.kebabCase(node.playlist.playlistTitle)}>
+            {node.playlist.playlistTitle}
+          </Link>
         </h1>
       ))}
     </Layout>
