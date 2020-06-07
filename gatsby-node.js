@@ -10,6 +10,7 @@ exports.sourceNodes = async ({
   actions: { createNode },
   createContentDigest,
 }) => {
+  // Get fresh access token
   const response = await axios.post(
     `https://oauth2.googleapis.com/token?client_id=${process.env.YOUTUBE_CLIENT_ID}&client_secret=${process.env.YOUTUBE_CLIENT_SECRET}&refresh_token=${process.env.YOUTUBE_REFRESH_TOKEN}&grant_type=refresh_token`
   )
@@ -57,6 +58,7 @@ exports.sourceNodes = async ({
 
       // Save the tags
       const ytVideoTags = ytVideo.data.items[0].snippet.tags
+
       // Put the tags on their video object
       playlistVideos.data.items.filter(video => {
         if (ytVideoTags && video.snippet.resourceId.videoId === id) {
@@ -64,7 +66,7 @@ exports.sourceNodes = async ({
         }
       })
 
-      // Return on big array with all the tags from each video in the playlist
+      // Combine all video tags into one big array for the playlist
       return ytVideoTags
     })
 
