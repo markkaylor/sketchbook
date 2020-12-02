@@ -12,25 +12,25 @@ exports.sourceNodes = async ({
 }) => {
   // Get fresh access token
   const response = await axios.post(
-    `https://oauth2.googleapis.com/token?client_id=${process.env.YOUTUBE_CLIENT_ID}&client_secret=${process.env.YOUTUBE_CLIENT_SECRET}&refresh_token=${process.env.YOUTUBE_REFRESH_TOKEN}&grant_type=refresh_token`
+    `https://oauth2.googleapis.com/token?client_id=${process.env.YOUTUBE_CLIENT_ID}&client_secret=${process.env.YOUTUBE_CLIENT_SECRET}&grant_type=refresh_token&refresh_token=${process.env.YOUTUBE_REFRESH_TOKEN}`
   )
 
   const token = response.data.access_token
+
   // Get all playlists from youtube channel
   const ytPlaylists = await axios.get(
-    `https://www.googleapis.com/youtube/v3/playlists?&access_token=${token}&part=id%2C%20status%2C%20snippet&channelId=${process.env.YOUTUBE_CHANNEL_ID}&key=${process.env.YOUTUBE_KEY}`,
+    `https://www.googleapis.com/youtube/v3/playlists?&access_token=${token}&part=id&part=status&part=snippet&channelId=${process.env.YOUTUBE_CHANNEL_ID}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     }
   )
-
   // Loop through each playlist
   const playlistInfo = ytPlaylists.data.items.map(async playlist => {
     // Get all the videos from the playlist
     let playlistVideos = await axios.get(
-      `https://www.googleapis.com/youtube/v3/playlistItems?&access_token=${token}&part=snippet&playlistId=${playlist.id}&key=${process.env.YOUTUBE_KEY}`,
+      `https://www.googleapis.com/youtube/v3/playlistItems?&access_token=${token}&part=snippet&playlistId=${playlist.id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -46,9 +46,8 @@ exports.sourceNodes = async ({
     // Get the tags for each video
     const allTags = videos.map(async id => {
       // Call youtube again for more data on the
-
       const ytVideo = await axios.get(
-        `https://www.googleapis.com/youtube/v3/videos?&access_token=${token}&part=snippet&id=${id}&key=${process.env.YOUTUBE_KEY}`,
+        `https://www.googleapis.com/youtube/v3/videos?&access_token=${token}&part=snippet&id=${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -74,6 +73,8 @@ exports.sourceNodes = async ({
     const cleanPlaylistTags = playlistTags
       .flat()
       .filter(tag => tag !== undefined)
+
+    console.log("pickle", playlist.snippet)
 
     return Object.assign({
       playlistTitle: playlist.snippet.title,

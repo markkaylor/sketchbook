@@ -1,5 +1,6 @@
 import React from "react"
 import styled from "styled-components"
+import { Link } from "gatsby"
 
 import "./Layout.css"
 
@@ -14,7 +15,8 @@ const GridContent = styled.div`
   overflow: scroll;
   grid-row: 2 / span 11;
   grid-column: 1 / span 9;
-  padding: 1rem 0;
+  padding: 1rem 2rem;
+
   @media screen and (max-width: 900px) {
     grid-row: 2 / 12;
     grid-column: 1 / span 12;
@@ -46,9 +48,16 @@ const GridTitle = styled.div`
 const GridHeader = styled.div`
   grid-column: 1 / span 12;
   grid-row: 1 / 1;
-  padding: 2rem 0rem;
-  @media screen and (max-width: 900px) {
+  padding: 2rem 2rem 0rem 2rem;
+
+  a {
+    border-bottom: 1px dashed gray;
     padding: 0;
+    margin-right: 1rem;
+  }
+
+  @media screen and (max-width: 900px) {
+    padding: 1rem 2rem;
   }
 `
 
@@ -59,7 +68,10 @@ const Layout = ({ children, page }) => {
     <>
       <Wrapper>
         <GridContainer>
-          <GridHeader></GridHeader>
+          <GridHeader>
+            <Link to="/projects">Projects</Link>
+            <Link to="/words">Words</Link>
+          </GridHeader>
           <GridContent>{children}</GridContent>
           <GridTitle>
             <h1>Mark KAYLOR</h1>
