@@ -74,15 +74,15 @@ exports.sourceNodes = async ({
       .flat()
       .filter(tag => tag !== undefined)
 
-    console.log("pickle", playlist.snippet)
-
-    return Object.assign({
+    const result = {
       playlistTitle: playlist.snippet.title,
       playlistPublishedAt: playlist.snippet.publishedAt,
       playlistDescription: playlist.snippet.description,
       playlistTags: cleanPlaylistTags,
       videos: playlistVideos,
-    })
+    }
+
+    return result
   })
 
   const allYoutubePlaylist = await Promise.all(playlistInfo)

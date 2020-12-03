@@ -9,6 +9,10 @@ const GridContainer = styled.div`
   grid-template-columns: repeat(12, 1fr);
   display: grid;
   height: 100vh;
+  margin: 0 4rem;
+  @media screen and (max-width: 900px) {
+    margin: 0;
+  }
 `
 
 const GridContent = styled.div`
@@ -61,24 +65,18 @@ const GridHeader = styled.div`
   }
 `
 
-const Wrapper = styled.div``
-
-const Layout = ({ children, page }) => {
+const Layout = ({ children }) => {
   return (
-    <>
-      <Wrapper>
-        <GridContainer>
-          <GridHeader>
-            <Link to="/projects">Projects</Link>
-            <Link to="/words">Words</Link>
-          </GridHeader>
-          <GridContent>{children}</GridContent>
-          <GridTitle>
-            <h1>Mark KAYLOR</h1>
-          </GridTitle>
-        </GridContainer>
-      </Wrapper>
-    </>
+    <GridContainer>
+      <GridHeader>
+        <Link to="/projects">Projects</Link>
+        <Link to="/about">About</Link>
+      </GridHeader>
+      <GridContent>{children}</GridContent>
+      <GridTitle>
+        <h1>Mark KAYLOR</h1>
+      </GridTitle>
+    </GridContainer>
   )
 }
 

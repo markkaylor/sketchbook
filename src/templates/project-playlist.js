@@ -5,8 +5,9 @@ import { graphql } from "gatsby"
 import styled from "styled-components"
 
 const ProjectPlaylist = ({ data }) => {
-  const tags = data.youtubePlaylist.playlist.playlistTags
-  let noDuplicates = [...new Set(tags)]
+  // const tags = data.youtubePlaylist.playlist.playlistTags
+  // TODO: Make tags work...
+  // let noDuplicates = [...new Set(tags)]
   return (
     <Layout>
       <PlaylistTitleContainer>
@@ -14,22 +15,22 @@ const ProjectPlaylist = ({ data }) => {
         <DescriptionContainer>
           {data.youtubePlaylist.playlist.playlistDescription}
         </DescriptionContainer>
-        Filter by tag:
+        {/* Filter by tag:
         {noDuplicates.map((tag, index) => (
           <a key={tag + index}> {tag} </a>
-        ))}
+        ))} */}
       </PlaylistTitleContainer>
       <div>
         {data.youtubePlaylist.playlist.videos.data.items.map(video => {
           return (
             <PlaylistItemContainer key={video.snippet.resourceId.videoId}>
               <h2>{video.snippet.title}</h2>
-              <div>
+              {/* <div>
                 {video.tags &&
                   video.tags.map((tag, index) => (
                     <a key={tag + index}> {tag} </a>
                   ))}
-              </div>
+              </div> */}
               <VideoContainer>
                 <iframe
                   height="315"

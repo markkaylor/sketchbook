@@ -1,11 +1,10 @@
 {
-  "name": "gatsby-starter-default",
+  "name": "some-website",
   "private": true,
-  "description": "A simple starter to get up and developing quickly with Gatsby",
+  "description": "Off in my own world, making things...",
   "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "Mark Kaylor",
   "dependencies": {
-    "@google-cloud/local-auth": "^0.1.0",
     "axios": "^0.19.2",
     "gatsby": "^2.21.37",
     "gatsby-image": "^2.4.4",
