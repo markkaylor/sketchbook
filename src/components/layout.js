@@ -47,6 +47,10 @@ const GridTitle = styled.div`
   align-items: center;
   justify-content: flex-end;
   padding-right: 1rem;
+
+  a {
+    color: #424242f7;
+  }
 `
 
 const GridHeader = styled.div`
@@ -74,7 +78,9 @@ const Layout = ({ children }) => {
       </GridHeader>
       <GridContent>{children}</GridContent>
       <GridTitle>
-        <h1>Mark KAYLOR</h1>
+        <Link to="/">
+          <h1>Mark KAYLOR</h1>
+        </Link>
       </GridTitle>
     </GridContainer>
   )

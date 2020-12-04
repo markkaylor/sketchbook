@@ -140,7 +140,7 @@ exports.createPages = async ({ graphql, actions }) => {
   `)
   result.data.allYoutubePlaylist.edges.forEach(({ node }) => {
     createPage({
-      path: _.kebabCase(node.playlist.playlistTitle),
+      path: `/projects/${_.kebabCase(node.playlist.playlistTitle)}`,
       component: path.resolve(`./src/templates/project-playlist.js`),
       context: {
         title: node.playlist.playlistTitle,

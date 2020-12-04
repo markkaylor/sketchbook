@@ -38,7 +38,7 @@ const Projects = () => {
       <SEO title="Projects" />
       {playlists.map(({ node }) => (
         <h1>
-          <Link to={_.kebabCase(node.playlist.playlistTitle)}>
+          <Link to={`/projects/${_.kebabCase(node.playlist.playlistTitle)}`}>
             {node.playlist.playlistTitle}
           </Link>
         </h1>
