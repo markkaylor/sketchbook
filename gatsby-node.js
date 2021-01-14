@@ -30,7 +30,7 @@ exports.sourceNodes = async ({
   const playlistInfo = ytPlaylists.data.items.map(async playlist => {
     // Get all the videos from the playlist
     let playlistVideos = await axios.get(
-      `https://www.googleapis.com/youtube/v3/playlistItems?&access_token=${token}&part=snippet&playlistId=${playlist.id}`,
+      `https://www.googleapis.com/youtube/v3/playlistItems?&access_token=${token}&maxResults=50&part=snippet&playlistId=${playlist.id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
