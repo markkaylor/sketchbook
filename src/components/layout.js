@@ -73,7 +73,7 @@ const Layout = ({ children }) => {
   return (
     <GridContainer>
       <GridHeader>
-        <Link to="/projects">Projects</Link>
+        <Link to="/projects/sketchbook">Sketchbook</Link>
         <Link to="/about">About</Link>
       </GridHeader>
       <GridContent>{children}</GridContent>

@@ -1,6 +1,7 @@
 // Gatsby supports TypeScript natively!
 import React from "react"
 import Layout from "../components/layout"
+import CategoryList from "../components/categoryList"
 import { graphql } from "gatsby"
 import styled from "styled-components"
 
@@ -10,6 +11,7 @@ const ProjectPlaylist = ({ data }) => {
   // let noDuplicates = [...new Set(tags)]
   return (
     <Layout>
+      <CategoryList />
       <PlaylistTitleContainer>
         <h1>{data.youtubePlaylist.playlist.playlistTitle}</h1>
         <DescriptionContainer>

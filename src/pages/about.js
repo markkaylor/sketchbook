@@ -7,10 +7,7 @@ const Projects = () => {
   return (
     <Layout>
       <SEO title="Words" />
-      <p>
-        This is a website where I try to document my process making
-        stuff...mostly music.
-      </p>
+      <p>I dig music.</p>
     </Layout>
   )
 }
