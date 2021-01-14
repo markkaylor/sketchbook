@@ -56,8 +56,11 @@ const CategoryList = () => {
     <FlexWrapper>
       <h4>Collections: </h4>
       <FlexContainer>
-        {playlists.map(({ node }) => (
-          <Link to={`/projects/${_.kebabCase(node.playlist.playlistTitle)}`}>
+        {playlists.map(({ node, index }) => (
+          <Link
+            key={node.playlist.playlistTitle}
+            to={`/projects/${_.kebabCase(node.playlist.playlistTitle)}`}
+          >
             {node.playlist.playlistTitle}
           </Link>
         ))}

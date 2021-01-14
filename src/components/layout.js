@@ -26,6 +26,7 @@ const GridContent = styled.div`
     grid-column: 1 / span 12;
     width: 90vw;
     margin: 0 auto;
+    padding: 0;
   }
 `
 
