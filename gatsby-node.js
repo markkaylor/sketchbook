@@ -1,6 +1,7 @@
 const axios = require("axios")
 const path = require(`path`)
 const _ = require("lodash")
+const { retrieve } = require("./services/yt-fetch")
 
 require("dotenv").config({
   path: `.env`,
@@ -17,27 +18,30 @@ exports.sourceNodes = async ({
 
   const token = response.data.access_token
 
-  // Get all playlists from youtube channel
-  const ytPlaylists = await axios.get(
-    `https://www.googleapis.com/youtube/v3/playlists?&access_token=${token}&part=id&part=status&part=snippet&channelId=${process.env.YOUTUBE_CHANNEL_ID}`,
+  const ytPlaylists = await retrieve(
+    `/playlists`,
     {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
+      access_token: token,
+      part: "status, snippet",
+      channelId: process.env.YOUTUBE_CHANNEL_ID,
+    },
+    token
   )
+
   // Loop through each playlist
   const playlistInfo = ytPlaylists.data.items.map(async playlist => {
     // Get all the videos from the playlist
-    let playlistVideos = await axios.get(
-      `https://www.googleapis.com/youtube/v3/playlistItems?&access_token=${token}&maxResults=50&part=snippet&playlistId=${playlist.id}`,
+    let playlistVideos = await retrieve(
+      `/playlistItems`,
       {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    )
+        access_token: token,
+        maxResults: "50",
+        part: "snippet",
 
+        playlistId: playlist.id,
+      },
+      token
+    )
     // Get the id's for each video in the playlist
     const videos = playlistVideos.data.items.map(
       video => video.snippet.resourceId.videoId
@@ -46,13 +50,14 @@ exports.sourceNodes = async ({
     // Get the tags for each video
     const allTags = videos.map(async id => {
       // Call youtube again for more data on the video
-      const ytVideo = await axios.get(
-        `https://www.googleapis.com/youtube/v3/videos?&access_token=${token}&part=snippet&id=${id}`,
+      const ytVideo = await retrieve(
+        `/videos`,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+          access_token: token,
+          part: "snippet",
+          id: id,
+        },
+        token
       )
 
       // Save the tags
@@ -139,12 +144,15 @@ exports.createPages = async ({ graphql, actions }) => {
     }
   `)
   result.data.allYoutubePlaylist.edges.forEach(({ node }) => {
-    createPage({
-      path: `/projects/${_.kebabCase(node.playlist.playlistTitle)}`,
-      component: path.resolve(`./src/templates/project-playlist.js`),
-      context: {
-        title: node.playlist.playlistTitle,
-      },
-    })
+    // Temporarily only create a page for sketchbook
+    if (node.playlist.playlistTitle === "Sketchbook") {
+      createPage({
+        path: `/projects/${_.kebabCase(node.playlist.playlistTitle)}`,
+        component: path.resolve(`./src/templates/project-playlist.js`),
+        context: {
+          title: node.playlist.playlistTitle,
+        },
+      })
+    }
   })
 }
