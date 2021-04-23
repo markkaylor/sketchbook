@@ -45,7 +45,7 @@ exports.sourceNodes = async ({
 
     // Get the tags for each video
     const allTags = videos.map(async id => {
-      // Call youtube again for more data on the
+      // Call youtube again for more data on the video
       const ytVideo = await axios.get(
         `https://www.googleapis.com/youtube/v3/videos?&access_token=${token}&part=snippet&id=${id}`,
         {
