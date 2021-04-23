@@ -4,6 +4,11 @@ import { graphql } from "gatsby"
 import styled from "styled-components"
 
 const ProjectList = ({ data }) => {
+  const videos = data.youtubePlaylist.playlist.videos.data.items
+  const sortedVideos = videos.sort((a, b) => {
+    return new Date(b.snippet.publishedAt) - new Date(a.snippet.publishedAt)
+  })
+
   return (
     <Layout>
       <PlaylistTitleContainer>
@@ -13,7 +18,7 @@ const ProjectList = ({ data }) => {
         </DescriptionContainer>
       </PlaylistTitleContainer>
       <div>
-        {data.youtubePlaylist.playlist.videos.data.items.map(video => {
+        {sortedVideos.map(video => {
           return (
             <PlaylistItemContainer key={video.snippet.resourceId.videoId}>
               <h2>{video.snippet.title}</h2>
@@ -54,6 +59,7 @@ export const projectPlaylistQuery = graphql`
               snippet {
                 title
                 description
+                publishedAt
                 resourceId {
                   videoId
                 }
